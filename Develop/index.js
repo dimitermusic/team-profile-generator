@@ -3,6 +3,7 @@ const inquirer = require("inquirer");
 const fs = require("fs")
 const generateHtml = require("./util/generateHtml")
 const Employee = require("./lib/Employee");
+const employees = [new Employee];
 
 
 // Function that asks for user input when application starts
@@ -38,11 +39,10 @@ function askQuestion() {
     ])
     
     .then(response => {
-        const managerName = response.name
-        const id = response.id
-        const office = response.office
-        const question = response.question
-        const e = new Manager(managerName, id, office, question);
+        const managerName = response.name;
+        const id = response.id;
+        const office = response.office;
+        const question = response.question;
 
         switch (response.question) {
             case "Add engineer":
@@ -59,10 +59,8 @@ function askQuestion() {
                 console.log("goodbye!")
                 break;
         }
+        generateHtml.generateTeam();
     })
-    .then {
-        generateHtml();
-    }
 }
 
 function addEngineer() {
@@ -122,6 +120,7 @@ function addIntern() {
         const id = response.id;
         const email = response.email;
         const school = response.school;
+    
         askQuestion();
     })
 }
