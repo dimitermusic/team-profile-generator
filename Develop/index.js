@@ -2,8 +2,10 @@
 const inquirer = require("inquirer");
 const fs = require("fs")
 const generateHtml = require("./util/generateHtml")
-const Employee = require("./lib/Employee");
-const employees = [new Employee];
+const Manager = require("./lib/Manager");
+const Intern = require("./lib/Intern");
+const Engineer = require("./lib/Engineer");
+const employees = [];
 
 
 // Function that asks for user input when application starts
@@ -39,12 +41,20 @@ function askQuestion() {
     ])
     
     .then(response => {
+        // Sets responses to variables
         const managerName = response.name;
         const id = response.id;
+        const email = response.email
         const office = response.office;
         const question = response.question;
 
-        switch (response.question) {
+        // Sets responses to our new instance of the constructor
+        const newManager = new Manager(managerName, id, email, office)
+        console.log(newManager);
+        employees.push(newManager);
+
+        // Directs user to appropriate function based on their input
+        switch (question) {
             case "Add engineer":
                 console.log("add engineer!")
                 addEngineer();
@@ -54,15 +64,13 @@ function askQuestion() {
                 console.log("add intern!")
                 addIntern();
                 break;
-
             default:
-                console.log("goodbye!")
                 break;
         }
-        generateHtml.generateTeam();
     })
 }
 
+// Handles adding engineer
 function addEngineer() {
     inquirer.prompt([
         {
@@ -90,9 +98,15 @@ function addEngineer() {
         const id = response.id;
         const email = response.email;
         const github = response.github;
+
+        const newEngineer = new Engineer(name, id, email, github)
+        console.log(newEngineer);
+        employees.push(newEngineer);
+        finalQuestion();
     })
 }
 
+// Handles adding intern
 function addIntern() {
     inquirer.prompt([
         {
@@ -120,8 +134,42 @@ function addIntern() {
         const id = response.id;
         const email = response.email;
         const school = response.school;
+        
+        const newIntern = new Intern(name, id, email, school)
+        console.log(newIntern);
+        employees.push(newIntern);
+        finalQuestion();
+    })
+}
+
+// Handles starting over or quitting based on user input
+function finalQuestion() {
+    inquirer.prompt([
+        {
+            name: "question",
+            type: "list",
+            message: "Would you like to add another team member?",
+            choices: ["Yes", "No"]
+        }
+    ])
     
-        askQuestion();
+    .then(response => {
+        switch (response.question) {
+            case "Yes":
+                askQuestion();
+                break;
+
+            case "No":
+                console.log("Thank you. Goodbye!");
+                break;
+            default:
+                break;
+        }
+
+        // Generates html file based on user data
+        const html = generateHtml(employees)
+        console.log(html);
+        fs.writeFile("./output/index.html", html)
     })
 }
 
