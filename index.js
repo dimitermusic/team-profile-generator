@@ -7,7 +7,6 @@ const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 const employees = [];
 
-
 // Function that asks for user input when application starts
 function askQuestion() {
     // Inquirer package to gather responses from user
@@ -112,22 +111,22 @@ function addIntern() {
         {
             name: "name",
             type: "input",
-            message: "Enter the engineer's name."
+            message: "Enter the intern's name."
         },
         {
             name: "id",
             type: "input",
-            message: "Enter the engineer's employee ID."
+            message: "Enter the intern's employee ID."
         },
         {
             name: "email",
             type: "input",
-            message: "Enter the engineer's email address."
+            message: "Enter the intern's email address."
         },
         {
             name: "school",
             type: "input",
-            message: "Enter the engineer's GitHub username."
+            message: "Enter the intern's GitHub username."
         }
     ]).then(response => {
         const name = response.name;
@@ -168,8 +167,7 @@ function finalQuestion() {
 
         // Generates html file based on user data
         const html = generateHtml(employees)
-        console.log(html);
-        fs.writeFile("./output/index.html", html)
+        fs.writeFileSync("./output/index.html", html)
     })
 }
 
