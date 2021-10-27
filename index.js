@@ -38,35 +38,35 @@ function askQuestion() {
             choices: ["Add engineer", "Add intern"]
         }
     ])
-    
-    .then(response => {
-        // Sets responses to variables
-        const managerName = response.name;
-        const id = response.id;
-        const email = response.email
-        const office = response.office;
-        const question = response.question;
 
-        // Sets responses to our new instance of the constructor
-        const newManager = new Manager(managerName, id, email, office)
-        console.log(newManager);
-        employees.push(newManager);
+        .then(response => {
+            // Sets responses to variables
+            const managerName = response.name;
+            const id = response.id;
+            const email = response.email
+            const office = response.office;
+            const question = response.question;
 
-        // Directs user to appropriate function based on their input
-        switch (question) {
-            case "Add engineer":
-                console.log("add engineer!")
-                addEngineer();
-                break;
+            // Sets responses to our new instance of the constructor
+            const newManager = new Manager(managerName, id, email, office)
+            console.log(newManager);
+            employees.push(newManager);
 
-            case "Add intern":
-                console.log("add intern!")
-                addIntern();
-                break;
-            default:
-                break;
-        }
-    })
+            // Directs user to appropriate function based on their input
+            switch (question) {
+                case "Add engineer":
+                    console.log("add engineer!")
+                    addEngineer();
+                    break;
+
+                case "Add intern":
+                    console.log("add intern!")
+                    addIntern();
+                    break;
+                default:
+                    break;
+            }
+        })
 }
 
 // Handles adding engineer
@@ -133,7 +133,7 @@ function addIntern() {
         const id = response.id;
         const email = response.email;
         const school = response.school;
-        
+
         const newIntern = new Intern(name, id, email, school)
         console.log(newIntern);
         employees.push(newIntern);
@@ -151,24 +151,33 @@ function finalQuestion() {
             choices: ["Yes", "No"]
         }
     ])
-    
-    .then(response => {
-        switch (response.question) {
-            case "Yes":
-                askQuestion();
-                break;
 
-            case "No":
-                console.log("Thank you. Goodbye!");
-                break;
-            default:
-                break;
-        }
+        .then(response => {
+            switch (response.question) {
+                case "Yes":
+                    askQuestion();
+                    break;
 
-        // Generates html file based on user data
-        const html = generateHtml(employees)
-        fs.writeFileSync("./output/index.html", html)
-    })
+                case "No":
+                    console.log("Thank you. Goodbye!");
+                    break;
+                default:
+                    break;
+            }
+
+            // Generates output folder and html file based on user data
+            const html = generateHtml(employees)
+            const folderName = "./output"
+
+            try {
+                if (!fs.existsSync(folderName)) {
+                    fs.mkdirSync(folderName)
+                }
+            } catch (err) {
+                console.error(err)
+            }
+            fs.writeFileSync("./output/index.html", html)
+        })
 }
 
 askQuestion();
