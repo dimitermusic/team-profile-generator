@@ -4,7 +4,7 @@
 This app takes in user input about employees and adds it to a dynamically created html page from the command line.
 
 ## Table of Contents
-- [Team Profile Generator ![License: WTFPL](http://www.wtfpl.net/about/)](#team-profile-generator-)
+- [Team Profile Generator
   - [Description](#description)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
@@ -36,9 +36,6 @@ If you have any questions, please visit my Github profile or email me using the 
 
 [Github](https://github.com/dimitermusic)
 [Email](mailto:dimitermusic@gmail.com)
-
-## Link to Video
-[Video](https://drive.google.com/file/d/17jIv5V7bIUscHU93MuddsziVK0tutl1B/view?usp=sharing)
 
 ## Link to Repository
 [Repository](https://github.com/dimitermusic/team-profile-generator)
